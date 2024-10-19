@@ -1,0 +1,69 @@
+package br.com.etec.aula20240906.model.dao;
+
+import br.com.etec.aula20240906.model.Cliente;
+import br.com.etec.aula20240906.model.database.DatabaseMySQL;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class ClienteDao {
+        private Connection connection;
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+    
+    public boolean inserir(Cliente cliente){
+        String sql = "INSERT INTO clientes(nome, email, telefone, sexo, casado) VALUES(?,?,?,?,?)";
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1,cliente.getNome());
+                stmt.setString(2,cliente.getEmail());
+                stmt.setString(3,cliente.getTelefone());
+                stmt.setString(4,cliente.getSexo());
+                stmt.setBoolean(5,cliente.getCasado());
+                stmt.execute();
+                return true;
+                
+                
+            } catch (SQLException ex){
+                Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }
+
+
+
+
+
+
+        public Cliente getClienteById(int id){
+            String sql = "SELECT * FROM clientes WHERE id = ?";
+            Cliente retorno = new Cliente();
+
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setInt(1,id);
+                ResultSet resultado = stmt.executeQuery();
+
+                if (resultado.next()){
+                    retorno.setNome(resultado.getString());
+                }
+
+            } catch (SQLException ex){
+                Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+
+        }
+
+    }
+
