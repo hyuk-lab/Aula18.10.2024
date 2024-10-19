@@ -55,15 +55,18 @@ public class ClienteDao {
                 ResultSet resultado = stmt.executeQuery();
 
                 if (resultado.next()){
-                    retorno.setNome(resultado.getString());
+                    retorno.setNome(resultado.getString("nome"));
+                    retorno.setEmail(resultado.getString("email"));
+                    retorno.setTelefone(resultado.getString("telefone"));
+                    retorno.setSexo(resultado.getString("sexo"));
+                    retorno.setCasado(resultado.getBoolean("casado"));
                 }
 
             } catch (SQLException ex){
                 Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
             }
-
+            return retorno;
         }
-
     }
 
