@@ -32,8 +32,6 @@ public class ClienteDao {
                 stmt.setBoolean(5,cliente.getCasado());
                 stmt.execute();
                 return true;
-                
-                
             } catch (SQLException ex){
                 Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
                 return false;
@@ -55,6 +53,7 @@ public class ClienteDao {
                 ResultSet resultado = stmt.executeQuery();
 
                 if (resultado.next()){
+                    retorno.setId(resultado.getInt("id"));
                     retorno.setNome(resultado.getString("nome"));
                     retorno.setEmail(resultado.getString("email"));
                     retorno.setTelefone(resultado.getString("telefone"));
