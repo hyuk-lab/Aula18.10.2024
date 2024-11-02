@@ -2,6 +2,7 @@ package br.com.etec.aula20240906.model.dao;
 
 import br.com.etec.aula20240906.model.Cliente;
 import br.com.etec.aula20240906.model.database.DatabaseMySQL;
+import javafx.fxml.FXML;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +40,17 @@ public class ClienteDao {
         }
 
 
+    public  void deletar(int id) {
+        String sql = "DELETE FROM clientes WHERE id = ?";
 
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
 
@@ -67,5 +78,8 @@ public class ClienteDao {
             }
             return retorno;
         }
+
+
+
     }
 
